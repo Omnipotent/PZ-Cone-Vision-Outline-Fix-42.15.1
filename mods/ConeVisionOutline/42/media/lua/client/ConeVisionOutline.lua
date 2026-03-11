@@ -48,14 +48,21 @@ local function buildDirVectors()
 	}
 end
 
--- From Aim Outline (Kreb): get Java field index by name
+-- From Aim Outline (Kreb): get Java field index by name.
+-- getNumClassFields/getClassField are debug-only in 42.15+; use pcall and return nil when not available.
 local function getJavaFieldNum(object, fieldName)
-	for i = 0, getNumClassFields(object) - 1 do
-		local javaField = getClassField(object, i)
-		if luautils.stringEnds(tostring(javaField), '.' .. fieldName) then
-			return i
+	local ok, idx = pcall(function()
+		local n = getNumClassFields(object)
+		if n == nil then return nil end
+		for i = 0, n - 1 do
+			local javaField = getClassField(object, i)
+			if luautils.stringEnds(tostring(javaField), '.' .. fieldName) then
+				return i
+			end
 		end
-	end
+		return nil
+	end)
+	return (ok and idx) or nil
 end
 
 local function clearOutline(obj)
@@ -233,8 +240,10 @@ local function updateHitListOutline(character)
 		local ok, target = pcall(function()
 			local hitInfo = list:get(i)
 			local objNum = getJavaFieldNum(hitInfo, "object")
+			if objNum == nil then return nil end
 			local tmp = getClassFieldVal(hitInfo, getClassField(hitInfo, objNum))
 			local objNum2 = getJavaFieldNum(tmp, "object")
+			if objNum2 == nil then return nil end
 			return getClassFieldVal(tmp, getClassField(tmp, objNum2))
 		end)
 		if ok and target then
