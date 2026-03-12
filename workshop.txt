@@ -1,0 +1,6 @@
+version=1
+id=3683309028
+title=Cone Vision Outline (42.15.2 Fix)
+description=REPLACEMENT MOD. Unofficial Fix for 42.15.x MP, tested on a Dedicated Server. Will remove if/when the original mod is fixed! Thank you!
+tags=Build 42;Interface;Multiplayer;QoL
+visibility=unlisted

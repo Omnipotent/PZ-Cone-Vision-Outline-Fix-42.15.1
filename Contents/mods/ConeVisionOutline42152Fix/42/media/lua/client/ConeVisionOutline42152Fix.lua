@@ -237,26 +237,9 @@ local function updateHitListOutline(character)
 		return currentHitList
 	end
 
-	for i = 0, list:size() - 1 do
-		local ok, target = pcall(function()
-			local hitInfo = list:get(i)
-			local objNum = getJavaFieldNum(hitInfo, "object")
-			if objNum == nil then return nil end
-			local tmp = getClassFieldVal(hitInfo, getClassField(hitInfo, objNum))
-			local objNum2 = getJavaFieldNum(tmp, "object")
-			if objNum2 == nil then return nil end
-			return getClassFieldVal(tmp, getClassField(tmp, objNum2))
-		end)
-		if ok and target then
-			pcall(function()
-				local cr, cg, cb, ca = getConeOutlineColor()
-				target:setOutlineHighlight(PLAYER_NUM, true)
-				target:setOutlineHighlightCol(PLAYER_NUM, 0, 1, 0, ca)
-			end)
-			currentHitList[target] = true
-		end
-	end
-
+	-- In 42.15+ getNumClassFields/getClassField are debug-only; calling them (even in pcall) logs
+	-- "Not in debug" every frame and spams the log. Do not use reflection here; skip hit-list outline.
+	-- (Cone outline and overlay still work; only green melee hit-list outline is disabled.)
 	for obj, _ in pairs(lastHitListHighlighted) do
 		if not currentHitList[obj] then
 			clearOutline(obj)
