@@ -1,5 +1,5 @@
 UI_RU = {
-	UI_CVO_Options_Title = "Cone Vision Outline",
+	UI_CVO_Options_Title = "Cone Vision Outline (42.15.2 Fix)",
 	UI_CVO_Options_ConeOutlineColor = "Цвет обводки конуса",
 	UI_CVO_Options_ConeOutlineColor_Tooltip = "Цвет обводки зомби и животных в конусе обзора при прицеливании (ПКМ). Зелёная обводка цели в ближнем бою не меняется.",
 	UI_CVO_Options_ConeOutlineAlpha = "Интенсивность обводки конуса",

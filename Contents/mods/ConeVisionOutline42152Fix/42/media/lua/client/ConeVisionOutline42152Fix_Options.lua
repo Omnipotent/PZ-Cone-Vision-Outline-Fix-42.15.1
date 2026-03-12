@@ -1,12 +1,12 @@
--- Mod options for Cone Vision Outline (Settings -> Mods).
+-- Mod options for Cone Vision Outline (42.15.2 Fix) (Settings -> Mods).
 -- Color and intensity (alpha) for cone outline (zombies/animals in vision cone).
-local MODULE_ID = "ConeVisionOutline"
+local MODULE_ID = "ConeVisionOutline42152Fix"
 
-ConeVisionOutlineOptions = ConeVisionOutlineOptions or {}
-ConeVisionOutlineOptions.ConeOutlineColor = { r = 1, g = 1, b = 1 }  -- RGB from color picker
-ConeVisionOutlineOptions.ConeOutlineAlpha = 0.3  -- intensity 0..1 from slider
-ConeVisionOutlineOptions.ScaleOutlineByLight = false  -- scale outline alpha by square light level
-ConeVisionOutlineOptions.VehicleOutlineAlwaysOn = false  -- in vehicle: show outlines without holding RMB
+ConeVisionOutline42152FixOptions = ConeVisionOutline42152FixOptions or {}
+ConeVisionOutline42152FixOptions.ConeOutlineColor = { r = 1, g = 1, b = 1 }  -- RGB from color picker
+ConeVisionOutline42152FixOptions.ConeOutlineAlpha = 0.3  -- intensity 0..1 from slider
+ConeVisionOutline42152FixOptions.ScaleOutlineByLight = false  -- scale outline alpha by square light level
+ConeVisionOutline42152FixOptions.VehicleOutlineAlwaysOn = false  -- in vehicle: show outlines without holding RMB
 
 local PZOptions
 
@@ -16,19 +16,19 @@ local function applyOptions()
     if options then
         local optColor = options:getOption("ConeOutlineColor")
         if optColor then
-            ConeVisionOutlineOptions.ConeOutlineColor = optColor:getValue()
+            ConeVisionOutline42152FixOptions.ConeOutlineColor = optColor:getValue()
         end
         local optAlpha = options:getOption("ConeOutlineAlpha")
         if optAlpha then
-            ConeVisionOutlineOptions.ConeOutlineAlpha = optAlpha:getValue()
+            ConeVisionOutline42152FixOptions.ConeOutlineAlpha = optAlpha:getValue()
         end
         local optScaleLight = options:getOption("ScaleOutlineByLight")
         if optScaleLight then
-            ConeVisionOutlineOptions.ScaleOutlineByLight = optScaleLight:getValue()
+            ConeVisionOutline42152FixOptions.ScaleOutlineByLight = optScaleLight:getValue()
         end
         local optVehicleAlways = options:getOption("VehicleOutlineAlwaysOn")
         if optVehicleAlways then
-            ConeVisionOutlineOptions.VehicleOutlineAlwaysOn = optVehicleAlways:getValue()
+            ConeVisionOutline42152FixOptions.VehicleOutlineAlwaysOn = optVehicleAlways:getValue()
         end
     end
 end
@@ -37,7 +37,7 @@ local function initConfig()
     if not PZAPI or not PZAPI.ModOptions then return end
     PZOptions = PZAPI.ModOptions:create(MODULE_ID, getText("UI_CVO_Options_Title"))
 
-    local p = ConeVisionOutlineOptions.ConeOutlineColor
+    local p = ConeVisionOutline42152FixOptions.ConeOutlineColor
     PZOptions:addColorPicker(
         "ConeOutlineColor",
         getText("UI_CVO_Options_ConeOutlineColor"),
@@ -48,19 +48,19 @@ local function initConfig()
         "ConeOutlineAlpha",
         getText("UI_CVO_Options_ConeOutlineAlpha"),
         0, 1, 0.05,
-        ConeVisionOutlineOptions.ConeOutlineAlpha,
+        ConeVisionOutline42152FixOptions.ConeOutlineAlpha,
         getText("UI_CVO_Options_ConeOutlineAlpha_Tooltip")
     )
     PZOptions:addTickBox(
         "ScaleOutlineByLight",
         getText("UI_CVO_Options_ScaleOutlineByLight"),
-        ConeVisionOutlineOptions.ScaleOutlineByLight,
+        ConeVisionOutline42152FixOptions.ScaleOutlineByLight,
         getText("UI_CVO_Options_ScaleOutlineByLight_Tooltip")
     )
     PZOptions:addTickBox(
         "VehicleOutlineAlwaysOn",
         getText("UI_CVO_Options_VehicleOutlineAlwaysOn"),
-        ConeVisionOutlineOptions.VehicleOutlineAlwaysOn,
+        ConeVisionOutline42152FixOptions.VehicleOutlineAlwaysOn,
         getText("UI_CVO_Options_VehicleOutlineAlwaysOn_Tooltip")
     )
 
@@ -79,4 +79,4 @@ Events.OnGameStart.Add(function()
     applyOptions()
 end)
 
-return ConeVisionOutlineOptions
+return ConeVisionOutline42152FixOptions

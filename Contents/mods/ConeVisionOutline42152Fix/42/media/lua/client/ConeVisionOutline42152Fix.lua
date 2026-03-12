@@ -1,11 +1,11 @@
 -- Outline for zombies and animals in vision cone when aiming RMB.
--- Hit-list outline (melee green / firearm red-green) reuses logic from Aim Outline by Kreb (Workshop ID: 3404684285, Mod ID: AimOutline).
--- Overlay (optional, see Mod Options): when engine does not draw outline (e.g. floor above on stairs), we draw outline in 2D on top.
+-- 42.15.2 fix variant: no debug-only reflection; hit-list outline skipped in normal play.
+-- Hit-list logic from Aim Outline by Kreb (Workshop ID: 3404684285, Mod ID: AimOutline).
 require "Foraging/forageSystem"
 require "luautils"
 
 local O
-pcall(function() O = require("ConeVisionOutline_Options") end)
+pcall(function() O = require("ConeVisionOutline42152Fix_Options") end)
 local function getConeOutlineColor()
 	if O and O.ConeOutlineColor then
 		local c = O.ConeOutlineColor
@@ -124,15 +124,15 @@ local function isInVisionCone(character, dx, dy)
 end
 
 -- Overlay UI: draws pulsing circle (growl-style) for targets on floor+1 that the engine does not draw
-local ConeVisionOutlineOverlay = ISUIElement:derive("ConeVisionOutlineOverlay")
+local ConeVisionOutline42152FixOverlay = ISUIElement:derive("ConeVisionOutline42152FixOverlay")
 local function getOverlayCircleTexture()
 	if overlayCircleTex then return overlayCircleTex end
 	local ok, t = pcall(function() return getTexture("media/ui/circle.png") end)
 	if ok and t then overlayCircleTex = t end
 	return overlayCircleTex
 end
-function ConeVisionOutlineOverlay:prerender() end
-function ConeVisionOutlineOverlay:render()
+function ConeVisionOutline42152FixOverlay:prerender() end
+function ConeVisionOutline42152FixOverlay:render()
 	-- Let mouse events pass through so RMB (aim) still works
 	if not self._mousePassThrough and self.javaObject then
 		pcall(function() self.javaObject:setConsumeMouseEvents(false) end)
@@ -170,7 +170,7 @@ function ConeVisionOutlineOverlay:render()
 		end
 	end
 end
-function ConeVisionOutlineOverlay:new()
+function ConeVisionOutline42152FixOverlay:new()
 	local pid = getPlayer() and getPlayer():getPlayerNum() or 0
 	local x = getPlayerScreenLeft(pid)
 	local y = getPlayerScreenTop(pid)
@@ -184,7 +184,7 @@ local function ensureOverlayUI()
 	if overlayUI then return end
 	if not ISUIElement or type(ISUIElement.derive) ~= "function" then return end
 	if not getPlayerScreenLeft or not getPlayerScreenWidth then return end
-	overlayUI = ConeVisionOutlineOverlay:new()
+	overlayUI = ConeVisionOutline42152FixOverlay:new()
 	if not overlayUI then return end
 	if overlayUI.initialise then overlayUI:initialise() end
 	if overlayUI.addToUIManager then overlayUI:addToUIManager() end
@@ -209,6 +209,7 @@ local function updateOverlayBounds()
 end
 
 -- Reused from Aim Outline (Kreb): outline melee targets from getHitInfoList() in green. Firearm: no outline.
+-- In 42.15+ getNumClassFields is debug-only, so hit-list outline is skipped in normal play.
 local function updateHitListOutline(character)
 	local currentHitList = {}
 	if not getCore():getOptionMeleeOutline() then

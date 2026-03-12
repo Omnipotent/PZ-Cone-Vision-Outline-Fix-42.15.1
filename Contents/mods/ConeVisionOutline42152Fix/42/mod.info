@@ -1,0 +1,7 @@
+name=Cone Vision Outline (42.15.2 Fix)
+id=ConeVisionOutline42152Fix
+poster=poster.png
+description=Unofficial Fix for 42.15.x. Works only when "Melee outline" option is on (Display). White outline for zombies and animals in vision cone when aiming (RMB). Green melee hit-list outline disabled in this build (game API change). Respects ShortSighted trait. Based on Cone Vision Outline; hit-list logic from Aim Outline by Kreb (Workshop ID: 3404684285).
+pzversion=42
+versionMin=42.15.0
+modversion=0.9

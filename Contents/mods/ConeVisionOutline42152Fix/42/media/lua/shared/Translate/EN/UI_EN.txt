@@ -1,5 +1,5 @@
 UI_EN = {
-	UI_CVO_Options_Title = "Cone Vision Outline",
+	UI_CVO_Options_Title = "Cone Vision Outline (42.15.2 Fix)",
 	UI_CVO_Options_ConeOutlineColor = "Cone outline color",
 	UI_CVO_Options_ConeOutlineColor_Tooltip = "Color of the outline for zombies and animals in the vision cone when aiming (RMB). Melee hit-list green outline is unchanged.",
 	UI_CVO_Options_ConeOutlineAlpha = "Cone outline intensity",
